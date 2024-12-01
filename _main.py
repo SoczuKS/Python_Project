@@ -1,4 +1,7 @@
+from Application import Application
+
 def main():
-    pass
+    app = Application()
+    app.run()
 
 main()
