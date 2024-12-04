@@ -9,11 +9,11 @@ class Player:
 
     def __init__(self, money, ai: bool = False):
         if ai:
-            self.name = "CPU " + str(Player.__ai_player_id)
+            self.__name = "CPU " + str(Player.__ai_player_id)
             Player.__ai_player_id += 1
             self.__ai = AI.create_ai()
         else:
-            self.name = "Player"
+            self.__name = "Player"
             self.__ai = None
         self.__money = money
         self.__cards = []
@@ -22,15 +22,22 @@ class Player:
         self.__bet_pot = 0
         self.__checked = False
         self.__all_in = False
+        self.__bankrupt = False
 
     def get_name(self):
-        return self.name
+        return self.__name
 
     def is_ai(self):
         return self.__ai is not None
 
     def get_money(self):
         return self.__money
+
+    def get_bet_pot(self):
+        return self.__bet_pot
+
+    def get_cards(self):
+        return self.__cards
 
     def new_deal(self):
         self.__folded = False
@@ -42,3 +49,25 @@ class Player:
     def new_bet(self):
         self.__checked = self.__all_in or self.__folded
         self.__bet_pot = 0
+
+    def add_card(self, card):
+        self.__cards.append(card)
+
+    def bet(self, value):
+        diff = value - self.__bet_pot
+
+        if diff >= self.__money:
+            return self.play_all_in()
+
+        self.__money -= diff
+        self.__bet_pot += diff
+
+    def play_all_in(self):
+        self.__bet_pot += self.__money
+        self.__money = 0
+        self.__all_in = True
+        return self.__bet_pot
+
+    def make_ai_move(self, game):
+        if self.__ai:
+            self.__ai.make_move(game, self)

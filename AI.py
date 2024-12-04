@@ -12,3 +12,6 @@ class AI:
     def __init__(self, ai_type):
         self.__ai_type = ai_type
 
+    def make_move(self, game, player):
+        pass
+
