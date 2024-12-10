@@ -25,3 +25,6 @@ class Window(QWidget):
 
     def get_players_table(self) -> QTableView:
         return self.ui.players_table
+
+    def get_community_cards_table(self) -> QTableView:
+        return self.ui.community_cards_table

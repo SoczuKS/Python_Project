@@ -33,4 +33,4 @@ class Application:
         print("Check button clicked")
 
     def __start_game(self):
-        self.__game.start(self.__window.get_players_table())
+        self.__game.start(self.__window.get_players_table(), self.__window.get_community_cards_table())

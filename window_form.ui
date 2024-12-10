@@ -141,7 +141,7 @@
      <x>172</x>
      <y>40</y>
      <width>680</width>
-     <height>620</height>
+     <height>540</height>
     </rect>
    </property>
    <property name="font">
@@ -149,6 +149,22 @@
      <family>Tahoma</family>
      <pointsize>12</pointsize>
     </font>
+   </property>
+   <property name="editTriggers">
+    <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+   </property>
+  </widget>
+  <widget class="QTableView" name="community_cards_table">
+   <property name="geometry">
+    <rect>
+     <x>172</x>
+     <y>590</y>
+     <width>680</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="editTriggers">
+    <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
    </property>
   </widget>
  </widget>

@@ -21,6 +21,7 @@ class Game:
 
     def __init__(self):
         self.__players_table = None
+        self.__community_cards_table = None
         self.__init_players()
         self.__deck = Deck()
         self.__community_cards = []
@@ -65,9 +66,12 @@ class Game:
 
         self.__players_table.setModel(model)
 
+    def __update_community_cards_table(self):
+        pass # TODO:
 
-    def start(self, players_table: QTableView):
+    def start(self, players_table: QTableView, community_cards_table: QTableView):
         self.__players_table = players_table
+        self.__community_cards_table = community_cards_table
         self.__new_deal()
 
     def __new_deal(self):
