@@ -1,5 +1,7 @@
 from PySide6.QtWidgets import QWidget, QTableView
+
 from window_form import Ui_MainWidget
+
 
 class Window(QWidget):
     def __init__(self, parent=None):

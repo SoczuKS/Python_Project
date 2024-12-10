@@ -1,8 +1,10 @@
 import random
 
+
 def create_ai():
     ai_type = random.randint(AI.AI_TYPE_CAREFULLY, AI.AI_TYPE_AGGRESSIVE)
     return AI(ai_type)
+
 
 class AI:
     AI_TYPE_CAREFULLY = 0
@@ -14,4 +16,3 @@ class AI:
 
     def make_move(self, game, player):
         pass
-
