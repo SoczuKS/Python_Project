@@ -73,3 +73,9 @@ class Player:
     def make_ai_move(self, game):
         if self.__ai:
             self.__ai.make_move(game, self)
+
+    def has_played_all_in(self):
+        return self.__all_in
+
+    def has_folded(self):
+        return self.__folded
