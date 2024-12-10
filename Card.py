@@ -9,3 +9,6 @@ class Card:
 
     def __str__(self):
         return f"{self.rank}{self.suit.value}"
+
+    def get_color(self):
+        return self.suit.get_color()
