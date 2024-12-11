@@ -78,6 +78,10 @@ class Game:
             if i == self.__dealer_player_index:
                 button_str += " D"
             model.setItem(i, 5, QStandardItem(button_str))
+            if i == self.__next_player_index:
+                turn_item = QStandardItem("•")
+                turn_item.setForeground(QColor("yellow"))
+                model.setItem(i, 6, turn_item)
 
         self.__players_table.setModel(model)
         self.__players_table.setColumnWidth(3, 50)
@@ -121,8 +125,8 @@ class Game:
         self.__players[self.__small_blind_player_index].bet(self.__small_blind)
         self.__players[self.__big_blind_player_index].bet(self.__big_blind)
 
-        self.__update_players_table()
         self.__next_player()
+        self.__update_players_table()
 
     def __draw_cards(self):
         for i in range(2):
