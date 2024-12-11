@@ -30,3 +30,6 @@ class Window(QWidget):
 
     def get_community_cards_table(self) -> QTableView:
         return self.ui.community_cards_table
+
+    def get_deal_pot_label(self):
+        return self.ui.deal_pot_label

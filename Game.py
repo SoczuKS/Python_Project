@@ -3,7 +3,7 @@ import time
 
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QStandardItemModel, QStandardItem, QColor
-from PySide6.QtWidgets import QTableView
+from PySide6.QtWidgets import QTableView, QLabel
 
 from Deck import Deck
 from HandEvaluator import HandEvaluator
@@ -25,6 +25,7 @@ class Game:
     def __init__(self):
         self.__players_table = None
         self.__community_cards_table = None
+        self.__deal_pot_label = None
 
         self.__init_players()
 
@@ -101,9 +102,10 @@ class Game:
 
         self.__community_cards_table.setModel(model)
 
-    def start(self, players_table: QTableView, community_cards_table: QTableView):
+    def start(self, players_table: QTableView, community_cards_table: QTableView, deal_pot_label: QLabel):
         self.__players_table = players_table
         self.__community_cards_table = community_cards_table
+        self.__deal_pot_label = deal_pot_label
         self.__new_deal()
 
     def __new_deal(self):
@@ -115,6 +117,7 @@ class Game:
 
         self.__stage = Game.__Stage.pre_flop
         self.__deal_pot = 0
+        self.__deal_pot_label.setText(f"${self.__deal_pot}")
         self.__raise_counter = 0
         self.__call_value = self.__big_blind
         self.__min_raise_value = self.__big_blind * 2
@@ -183,6 +186,7 @@ class Game:
             self.__deal_pot += p.get_bet_pot()
             p.new_bet()
 
+        self.__deal_pot_label.setText(f"${self.__deal_pot}")
         self.__raise_counter = 0
         self.__call_value = 0
         self.__min_raise_value = self.__big_blind
