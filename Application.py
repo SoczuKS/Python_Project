@@ -8,7 +8,7 @@ from Window import Window
 
 class Application:
     def __init__(self):
-        self.__game = None
+        self.__game = Game()
         self.__qt_app = QApplication(sys.argv)
         self.__window = Window()
         self.__window.connect_fold_button(self.__fold_button_clicked)
@@ -18,21 +18,21 @@ class Application:
 
     def run(self):
         self.__window.show()
-        self.__game = Game()
         self.__start_game()
         sys.exit(self.__qt_app.exec())
 
     def __fold_button_clicked(self):
-        print("Fold button clicked")
+        self.__game.fold()
 
     def __raise_button_clicked(self):
-        print("Raise button clicked")
+        value = self.__window.get_raise_value()
+        self.__game.raise_bet(value)
 
     def __allin_button_clicked(self):
-        print("All-in button clicked")
+        self.__game.all_in()
 
-        print("Check button clicked")
     def __call_check_button_clicked(self):
+        self.__game.call_check()
 
     def __start_game(self):
         self.__game.start(self.__window.get_players_table(), self.__window.get_community_cards_table(), self.__window.get_deal_pot_label())
