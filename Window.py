@@ -13,8 +13,8 @@ class Window(QWidget):
     def connect_fold_button(self, slot):
         self.ui.fold_button.clicked.connect(slot)
 
-    def connect_check_button(self, slot):
-        self.ui.check_button.clicked.connect(slot)
+    def connect_call_check_button(self, slot):
+        self.ui.call_check_button.clicked.connect(slot)
 
     def connect_allin_button(self, slot):
         self.ui.allin_button.clicked.connect(slot)
@@ -33,3 +33,6 @@ class Window(QWidget):
 
     def get_deal_pot_label(self):
         return self.ui.deal_pot_label
+
+    def get_raise_value(self):
+        return self.ui.raise_value_slider.value()

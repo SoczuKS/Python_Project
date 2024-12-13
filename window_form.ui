@@ -46,7 +46,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="check_button">
+     <widget class="QPushButton" name="call_check_button">
       <property name="minimumSize">
        <size>
         <width>100</width>
@@ -54,7 +54,7 @@
        </size>
       </property>
       <property name="text">
-       <string>Check</string>
+       <string>Check or Call</string>
       </property>
      </widget>
     </item>
@@ -163,6 +163,12 @@ color: rgb(0, 0, 0);</string>
    <property name="selectionMode">
     <enum>QAbstractItemView::SelectionMode::NoSelection</enum>
    </property>
+   <attribute name="verticalHeaderVisible">
+    <bool>false</bool>
+   </attribute>
+   <attribute name="verticalHeaderHighlightSections">
+    <bool>false</bool>
+   </attribute>
   </widget>
   <widget class="QTableView" name="community_cards_table">
    <property name="geometry">
@@ -183,6 +189,18 @@ color: rgb(0, 0, 0);</string>
    <property name="selectionMode">
     <enum>QAbstractItemView::SelectionMode::NoSelection</enum>
    </property>
+   <attribute name="horizontalHeaderVisible">
+    <bool>false</bool>
+   </attribute>
+   <attribute name="horizontalHeaderHighlightSections">
+    <bool>false</bool>
+   </attribute>
+   <attribute name="verticalHeaderVisible">
+    <bool>false</bool>
+   </attribute>
+   <attribute name="verticalHeaderHighlightSections">
+    <bool>false</bool>
+   </attribute>
   </widget>
   <widget class="QLabel" name="no_name">
    <property name="geometry">
