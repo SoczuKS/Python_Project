@@ -79,3 +79,13 @@ class Player:
 
     def has_folded(self):
         return self.__folded
+
+    def check(self):
+        self.__checked = True
+
+    def has_checked(self):
+        return self.__checked
+
+    def fold(self):
+        self.__folded = True
+        self.__checked = True
