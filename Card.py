@@ -7,10 +7,13 @@ class Card:
         self.suit = suit
         self.rank = rank
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.rank}{self.suit}"
 
-    def get_color(self):
+    def get_rank(self) -> Rank:
+        return self.rank
+
+    def get_color(self) -> str:
         return self.suit.get_color()
 
     def get_bit_value(self) -> int:

@@ -16,7 +16,7 @@ class Rank(Enum):
     KING = {"bit_value": 0b0100000000000, "rank_value": 11, "prime": 37}
     ACE = {"bit_value": 0b1000000000000, "rank_value": 12, "prime": 41}
 
-    def __str__(self):
+    def __str__(self) -> str:
         string_representation = {Rank.TWO: "2", Rank.THREE: "3", Rank.FOUR: "4", Rank.FIVE: "5", Rank.SIX: "6", Rank.SEVEN: "7", Rank.EIGHT: "8", Rank.NINE: "9", Rank.TEN: "10",
                                  Rank.JACK: "J", Rank.QUEEN: "Q", Rank.KING: "K", Rank.ACE: "A"}
         return string_representation[self]

@@ -7,11 +7,11 @@ class Suit(Enum):
     CLUBS = 0b1000
     SPADES = 0b0001
 
-    def get_color(self):
+    def get_color(self) -> str:
         if self == Suit.HEARTS or self == Suit.DIAMONDS:
             return "red"
         return "black"
 
-    def __str__(self):
+    def __str__(self) -> str:
         string_representation = {Suit.HEARTS: "♥", Suit.DIAMONDS: "♦", Suit.CLUBS: "♣", Suit.SPADES: "♠"}
         return string_representation[self]
