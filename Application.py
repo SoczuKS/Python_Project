@@ -35,4 +35,5 @@ class Application:
         self.__game.call_check()
 
     def __start_game(self):
-        self.__game.start(self.__window.get_players_table(), self.__window.get_community_cards_table(), self.__window.get_deal_pot_label(), self.__window.get_winner_label())
+        self.__game.start(self.__window.get_players_table(), self.__window.get_community_cards_table(), self.__window.get_deal_pot_label(),
+                          self.__window.get_winner_label())

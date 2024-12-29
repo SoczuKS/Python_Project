@@ -20,11 +20,9 @@ class Player:
         self.__money = money
         self.__cards = []
         self.__folded = False
-        self.__hand_value = -1
         self.__bet_pot = 0
         self.__checked = False
         self.__all_in = False
-        self.__bankrupt = False
 
     def get_name(self):
         return self.__name
@@ -48,7 +46,6 @@ class Player:
         self.__folded = False
         self.__all_in = False
         self.__cards = []
-        self.__hand_value = -1
         self.new_bet()
 
     def new_bet(self):
