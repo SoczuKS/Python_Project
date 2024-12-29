@@ -47,7 +47,8 @@ class LookupTable:
         return self.__unsuited_lookup[prime_product]
 
     def __create_flush_lookup(self):
-        straight_flushes = [0b1111100000000, 0b111110000000, 0b11111000000, 0b1111100000, 0b111110000, 0b11111000, 0b1111100, 0b111110, 0b11111, 0b1000000001111]
+        straight_flushes = [0b1111100000000, 0b111110000000, 0b11111000000, 0b1111100000, 0b111110000, 0b11111000, 0b1111100, 0b111110, 0b11111,
+                            0b1000000001111]
 
         flushes = []
         generator = _get_lexicographically_next_bit_sequence(0b11111)

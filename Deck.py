@@ -1,7 +1,9 @@
 import random
+
 from Card import Card
 from Rank import Rank
 from Suit import Suit
+
 
 class Deck:
     def __init__(self):
