@@ -55,8 +55,8 @@ class Game:
         self.__deal_pot_label = deal_pot_label
         self.__new_deal()
 
-    def fold(self):
-        if self.__players[self.__next_player_index].is_ai():
+    def fold(self, made_by_ai=False):
+        if self.__players[self.__next_player_index].is_ai() and not made_by_ai:
             return
         self.__players[self.__next_player_index].fold()
 
@@ -69,8 +69,8 @@ class Game:
         else:
             self.__next_player()
 
-    def raise_bet(self, value, all_in=False):
-        if self.__players[self.__next_player_index].is_ai() or value < self.__min_raise_value:
+    def raise_bet(self, value, all_in=False, made_by_ai=False):
+        if (self.__players[self.__next_player_index].is_ai() and not made_by_ai) or value < self.__min_raise_value:
             return
         if not self.__raise_counter < Game.__max_bet_raises:
             return
@@ -88,13 +88,13 @@ class Game:
         self.__last_raiser_index = self.__next_player_index
         self.__next_player()
 
-    def all_in(self):
-        if self.__players[self.__next_player_index].is_ai():
+    def all_in(self, made_by_ai=False):
+        if self.__players[self.__next_player_index].is_ai() and not made_by_ai:
             return
         self.raise_bet(self.__players[self.__next_player_index].get_money() + self.__players[self.__next_player_index].get_bet_pot(), True)
 
-    def call_check(self):
-        if self.__players[self.__next_player_index].is_ai():
+    def call_check(self, made_by_ai=False):
+        if self.__players[self.__next_player_index].is_ai() and not made_by_ai:
             return
 
         if self.__call_value == self.__players[self.__next_player_index].get_bet_pot():
@@ -113,6 +113,16 @@ class Game:
                 self.__next_stage(True)
             else:
                 self.__next_player()
+
+    def get_call_value(self):
+        return self.__call_value
+
+    def get_min_raise_value(self):
+        return self.__min_raise_value
+
+    @staticmethod
+    def get_max_bet_raises():
+        return Game.__max_bet_raises
 
     def __init_players(self):
         self.__players: List[Player] = []
