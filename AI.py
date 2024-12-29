@@ -1,7 +1,5 @@
 import random
 
-from Game import Game
-
 
 def create_ai():
     ai_type = random.randint(AI.AI_TYPE_CAREFULLY, AI.AI_TYPE_AGGRESSIVE)
@@ -26,7 +24,7 @@ def _make_move_carefully(game, player):
 def _make_move_normal(game, player):
     can_check = game.get_call_value() == player.get_bet_pot()
     must_all_in = game.get_call_value() >= (player.get_money() + player.get_bet_pot())
-    can_raise = game.get_raise_counter() < Game.get_max_bet_raises() and not must_all_in
+    can_raise = game.can_raise() and not must_all_in
 
     if must_all_in:
         game.fold(True)
@@ -39,7 +37,7 @@ def _make_move_normal(game, player):
 def _make_move_aggressive(game, player):
     can_check = game.get_call_value() == player.get_bet_pot()
     must_all_in = game.get_call_value() >= (player.get_money() + player.get_bet_pot())
-    can_raise = game.get_raise_counter() < Game.get_max_bet_raises() and not must_all_in
+    can_raise = game.can_raise() and not must_all_in
 
     if must_all_in:
         game.call_check(True)

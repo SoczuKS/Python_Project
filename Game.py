@@ -72,7 +72,7 @@ class Game:
     def raise_bet(self, value, all_in=False, made_by_ai=False):
         if (self.__players[self.__next_player_index].is_ai() and not made_by_ai) or value < self.__min_raise_value:
             return
-        if not self.__raise_counter < Game.__max_bet_raises:
+        if not self.can_raise():
             return
         if not all_in and self.__players[self.__next_player_index].get_money() + self.__players[self.__next_player_index].get_bet_pot() < value:
             return
@@ -119,6 +119,9 @@ class Game:
 
     def get_min_raise_value(self):
         return self.__min_raise_value
+
+    def can_raise(self):
+        return self.__raise_counter < Game.__max_bet_raises
 
     @staticmethod
     def get_max_bet_raises():
