@@ -1,4 +1,6 @@
+import itertools
 import random
+import threading
 import time
 from threading import Timer
 from typing import List, Optional
@@ -9,7 +11,8 @@ from PySide6.QtWidgets import QTableView, QLabel
 
 from Card import Card
 from Deck import Deck
-from HandEvaluator import HandEvaluator
+from HandEvaluator import HandEvaluator, get_hand_name
+from LookupTable import LookupTable
 from Player import Player
 
 
@@ -29,6 +32,7 @@ class Game:
         self.__players_table: Optional[QTableView] = None
         self.__community_cards_table: Optional[QTableView] = None
         self.__deal_pot_label: Optional[QLabel] = None
+        self.__winner_label: Optional[QLabel] = None
 
         self.__init_players()
 
@@ -49,10 +53,11 @@ class Game:
         self.__next_player_index = 1
         self.__last_raiser_index = 0
 
-    def start(self, players_table: QTableView, community_cards_table: QTableView, deal_pot_label: QLabel):
+    def start(self, players_table: QTableView, community_cards_table: QTableView, deal_pot_label: QLabel, winner_label: QLabel):
         self.__players_table = players_table
         self.__community_cards_table = community_cards_table
         self.__deal_pot_label = deal_pot_label
+        self.__winner_label = winner_label
         self.__new_deal()
 
     def fold(self, made_by_ai=False):
@@ -61,7 +66,7 @@ class Game:
         self.__players[self.__next_player_index].fold()
 
         if self.__count_not_folded_players() == 1:
-            self.__check_winner()
+            self.__check_winner(True)
             return
 
         if self.__next_player_index == self.__last_raiser_index:
@@ -184,7 +189,10 @@ class Game:
         model.setColumnCount(5)
 
         for i, community_card in enumerate(self.__community_cards):
-            model.setItem(0, i, QStandardItem(f"{community_card}"))
+            card_item = QStandardItem(f"{community_card}")
+            card_item.setForeground(QColor(community_card.get_color()))
+            card_item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+            model.setItem(0, i, card_item)
 
         self.__community_cards_table.setModel(model)
 
@@ -198,6 +206,7 @@ class Game:
         self.__stage = Game.__Stage.pre_flop
         self.__deal_pot = 0
         self.__deal_pot_label.setText(f"${self.__deal_pot}")
+        self.__winner_label.setText("")
         self.__raise_counter = 0
         self.__call_value = self.__big_blind
         self.__min_raise_value = self.__big_blind * 2
@@ -244,7 +253,7 @@ class Game:
         self.__update_players_table()
 
         if self.__players[self.__next_player_index].is_ai():
-            timer = Timer(2, self.__make_ai_move)
+            timer = Timer(0.5, self.__make_ai_move)
             timer.start()
 
     def __next_stage(self, everybody_all_in=False):
@@ -297,8 +306,54 @@ class Game:
         self.__flop_turn_river_common_part(everybody_all_in)
         self.__deal_community_cards(1)
 
-    def __check_winner(self):
-        pass  # TODO
+    def __check_winner(self, win_by_fold=False):
+        for player in self.__players:
+            self.__deal_pot += player.get_bet_pot()
+            player.reset_bet_pot()
+
+        winning_players = []
+
+        best_hand_value = LookupTable.max_high_card
+        if win_by_fold:
+            winning_players = [p for p in self.__players if not p.has_folded()]
+        else:
+            for player in self.__players:
+                if player.has_folded():
+                    continue
+
+                hand_value = self.__hand_evaluator.evaluate(player.get_cards(), self.__community_cards)
+                if hand_value == best_hand_value:
+                    winning_players.append(player)
+                elif hand_value < best_hand_value:
+                    winning_players.clear()
+                    winning_players.append(player)
+                    best_hand_value = hand_value
+
+        to_pay = self.__deal_pot // len(winning_players)
+        if self.__deal_pot % len(winning_players) != 0:
+            change = self.__deal_pot - to_pay * len(winning_players)
+
+            if len(self.__players) == 2:
+                self.__players[self.__big_blind_player_index].add_money(change)
+            else:
+                for player in itertools.chain(self.__players[self.__small_blind_player_index:], self.__players[:self.__small_blind_player_index]):
+                    if player in winning_players:
+                        player.add_money(change)
+                        break
+
+        for player in winning_players:
+            player.add_money(to_pay)
+
+        winning_figure = get_hand_name(best_hand_value)
+        self.__winner_label.setText(f"{[player.get_name() for player in winning_players]} wins ${to_pay} with {winning_figure}")
+
+        self.__bust_players()
+
+        if self.__finished():
+            self.__winner_label.setText(f"{self.__players[0].get_name()} wins the game!")
+
+        timer = threading.Timer(3, self.__new_deal)
+        timer.start()
 
     def __everybody_all_in(self):
         return all([p.has_played_all_in() for p in self.__players])
@@ -311,3 +366,14 @@ class Game:
 
     def __make_ai_move(self):
         self.__players[self.__next_player_index].make_ai_move(self)
+
+    def __finished(self):
+        return len(self.__players) == 1
+
+    def __bust_players(self):
+        busted_players = [p for p in self.__players if p.get_money() == 0]  # TODO: show busted players
+
+        if len(busted_players) == 0:
+            return
+
+        self.__players = [p for p in self.__players if p.get_money() > 0]

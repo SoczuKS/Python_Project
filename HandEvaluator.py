@@ -6,9 +6,32 @@ from LookupTable import LookupTable
 def _prime_product(cards):
     product = 1
     for card in cards:
-        product *= card.get_rank()["prime"]
+        product *= card.get_rank().value["prime"]
 
     return product
+
+
+def get_hand_name(hand_value):
+    if 0 <= hand_value <= LookupTable.max_royal_flush:
+        return "Royal Flush"
+    elif hand_value <= LookupTable.max_straight_flush:
+        return "Straight Flush"
+    elif hand_value <= LookupTable.max_four_of_a_kind:
+        return "Four of a Kind"
+    elif hand_value <= LookupTable.max_full_house:
+        return "Full House"
+    elif hand_value <= LookupTable.max_flush:
+        return "Flush"
+    elif hand_value <= LookupTable.max_straight:
+        return "Straight"
+    elif hand_value <= LookupTable.max_three_of_a_kind:
+        return "Three of a Kind"
+    elif hand_value <= LookupTable.max_two_pair:
+        return "Two Pair"
+    elif hand_value <= LookupTable.max_pair:
+        return "Pair"
+    else:
+        return "High Card"
 
 
 class HandEvaluator:

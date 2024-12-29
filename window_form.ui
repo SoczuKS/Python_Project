@@ -144,7 +144,7 @@
      <x>172</x>
      <y>40</y>
      <width>680</width>
-     <height>540</height>
+     <height>470</height>
     </rect>
    </property>
    <property name="font">
@@ -178,6 +178,12 @@ color: rgb(0, 0, 0);</string>
      <width>680</width>
      <height>70</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tahoma</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(166, 166, 166);
@@ -242,6 +248,26 @@ color: rgb(0, 0, 0);</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="winner_label">
+   <property name="geometry">
+    <rect>
+     <x>172</x>
+     <y>525</y>
+     <width>680</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tahoma</family>
+     <pointsize>13</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Wygrywa: [] mając {}</string>
    </property>
   </widget>
  </widget>

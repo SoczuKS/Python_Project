@@ -35,6 +35,9 @@ class Player:
     def get_money(self):
         return self.__money
 
+    def add_money(self, money):
+        self.__money += money
+
     def get_bet_pot(self):
         return self.__bet_pot
 
@@ -63,6 +66,9 @@ class Player:
 
         self.__money -= diff
         self.__bet_pot += diff
+
+    def reset_bet_pot(self):
+        self.__bet_pot = 0
 
     def play_all_in(self):
         self.__bet_pot += self.__money

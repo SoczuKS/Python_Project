@@ -34,5 +34,8 @@ class Window(QWidget):
     def get_deal_pot_label(self):
         return self.ui.deal_pot_label
 
+    def get_winner_label(self):
+        return self.ui.winner_label
+
     def get_raise_value(self):
         return self.ui.raise_value_slider.value()
