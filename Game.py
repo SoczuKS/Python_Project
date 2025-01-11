@@ -17,7 +17,8 @@ from Player import Player
 
 
 class Game:
-    __ai_players_count = 3
+    __ai_players_count = 5
+    __human_players = 1
     __start_money = 2000
     __max_bet_raises = 3
     __start_big_blind = 20
@@ -134,7 +135,8 @@ class Game:
 
     def __init_players(self):
         self.__players: List[Player] = []
-        self.__players.append(Player(Game.__start_money, False))
+        for i in range(Game.__human_players):
+            self.__players.append(Player(Game.__start_money, False))
         for i in range(Game.__ai_players_count):
             self.__players.append(Player(Game.__start_money, True))
         random.shuffle(self.__players)

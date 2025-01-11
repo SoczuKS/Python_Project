@@ -8,6 +8,7 @@ class BankruptError(Exception):
 
 class Player:
     __ai_player_id = 1
+    __human_player_id = 1
 
     def __init__(self, money, ai: bool = False):
         if ai:
@@ -15,7 +16,8 @@ class Player:
             Player.__ai_player_id += 1
             self.__ai = AI.create_ai()
         else:
-            self.__name = "Player"
+            self.__name = "Player " + str(Player.__human_player_id)
+            Player.__human_player_id += 1
             self.__ai = None
         self.__money = money
         self.__cards = []
