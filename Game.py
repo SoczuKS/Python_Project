@@ -344,7 +344,7 @@ class Game:
         for player in winning_players:
             player.add_money(to_pay)
 
-        winning_figure = get_hand_name(best_hand_value)
+        winning_figure = get_hand_name(best_hand_value) if not win_by_fold else "others folded"
         self.__winner_label.setText(f"{[player.get_name() for player in winning_players]} wins ${to_pay} with {winning_figure}")
 
         self.__bust_players()
