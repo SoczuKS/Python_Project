@@ -16,5 +16,8 @@ class Card:
     def get_color(self) -> str:
         return self.suit.get_color()
 
+    def get_suit(self) -> Suit:
+        return self.suit
+
     def get_bit_value(self) -> int:
         return (self.rank.value["bit_value"] << 16) | (self.suit.value << 12) | (self.rank.value["rank_value"] << 8) | self.rank.value["prime"]

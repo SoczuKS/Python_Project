@@ -47,15 +47,9 @@ class HandEvaluator:
         return self.__hand_size_mapping[len(all_cards)](all_cards)
 
     def __five(self, cards):
-        first_card_bit_value = cards[0].get_bit_value()
-        second_card_bit_value = cards[1].get_bit_value()
-        third_card_bit_value = cards[2].get_bit_value()
-        fourth_card_bit_value = cards[3].get_bit_value()
-        fifth_card_bit_value = cards[4].get_bit_value()
-
         prime_product = _prime_product(cards)
 
-        if first_card_bit_value & second_card_bit_value & third_card_bit_value & fourth_card_bit_value & fifth_card_bit_value & 0xF000:
+        if cards[0].get_suit() == cards[1].get_suit() == cards[2].get_suit() == cards[3].get_suit() == cards[4].get_suit():
             return self.__lookup_table.flush_lookup(prime_product)
 
         return self.__lookup_table.unsuited_lookup(prime_product)
