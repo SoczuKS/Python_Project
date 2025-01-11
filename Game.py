@@ -151,6 +151,10 @@ class Game:
                 turn_item = QStandardItem("•")
                 turn_item.setForeground(QColor("yellow"))
                 model.setItem(i, 0, turn_item)
+            if player.has_folded():
+                turn_item = QStandardItem("•")
+                turn_item.setForeground(QColor("red"))
+                model.setItem(i, 0, turn_item)
             model.setItem(i, 1, QStandardItem(player.get_name()))
             money_item = QStandardItem(f"${player.get_money()}")
             money_item.setTextAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
